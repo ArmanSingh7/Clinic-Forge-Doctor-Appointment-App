@@ -1,0 +1,36 @@
+HELP.md
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### IDE ###
+.idea/
+*.iml
+*.iws
+*.ipr
+.classpath
+.project
+.settings/
+.factorypath
+
+### VS Code ###
+.vscode/
+
+### OS ###
+.DS_Store
+Thumbs.db
+
+### Application ###
+uploads/documents/
+*.env
+.env
+# Sensitive configs (CRITICAL)
+application.properties
+application.yml
+
+# Maven/Gradle build
+/target/
+
+# Compiled files
+*.class

@@ -1,0 +1,23 @@
+# Environment files
+.env
+*.env
+
+# IDE
+.idea/
+.vscode/
+*.iml
+.metadata/
+
+# OS
+.DS_Store
+Thumbs.db
+
+
+
+# Logs
+*.log
+
+# Security 
+application.properties
+
+.metadata/
