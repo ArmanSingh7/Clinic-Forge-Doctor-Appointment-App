@@ -216,7 +216,7 @@ The system follows a **client-server monolithic architecture** with a clear se
 
 ### **Architecture Flow**
 
-![](media/image1.png){width="4.8441087051618545in" height="5.123577209098863in"}
+![](media/image1.jpg)
 
 # 4. Technology Stack {#technology-stack}
 
@@ -360,7 +360,7 @@ Relationships:
 
 Api.js (Frontend) ( src-\>services-\>api.js)
 
-![](media/image2.png){width="6.5in" height="1.4013888888888888in"}
+![](media/image2.jpg)
 
 ### 
 
@@ -368,7 +368,7 @@ Api.js (Frontend) ( src-\>services-\>api.js)
 
 The PatientHistoryDTO provides a comprehensive view:
 
-![](media/image3.png){width="4.982773403324584in" height="2.0692355643044618in"}
+![](media/image3.jpg)
 
 ### **5.3 Doctor Module** (url : /api/doctors) {#doctor-module-url-apidoctors}
 
@@ -434,7 +434,7 @@ Relationships:
 
 #### 5.4.2. Appointment Status Lifecycle: {#appointment-status-lifecycle}
 
-![](media/image4.png){width="4.416049868766404in" height="1.2998097112860891in"}
+![](media/image4.jpg)
 
 | **Transition** | **Who Can Perform**    |
 |----------------|------------------------|
@@ -669,7 +669,7 @@ Notifications are created automatically in the service layer (not controllers):
 
 The database doctor_app contains 11 tables with the following relationships:
 
-![](media/image5.png){width="6.893844050743657in" height="4.289109798775153in"}
+![](media/image5.jpg)
 
 ### 6.2 Table Definitions {#table-definitions}
 
@@ -872,15 +872,15 @@ CSRF is disabled (csrf.disable()) since the API is stateless and uses JWT Bearer
 
 ### 8.1 Patient Workflow  {#patient-workflow}
 
-![](media/image6.png){width="6.5in" height="3.545138888888889in"}
+![](media/image6.jpg)
 
 ### 8.2 Doctor Workflow {#doctor-workflow}
 
-![](media/image7.png){width="6.5in" height="3.545138888888889in"}
+![](media/image7.jpg)
 
 ### 8.3 Admin Workflow {#admin-workflow}
 
-![](media/image8.png){width="6.5in" height="3.545138888888889in"}
+![](media/image8.jpg)
 
 # 
 
@@ -909,7 +909,7 @@ The GlobalExceptionHandler class (@RestControllerAdvice) provides centralized er
 
 ### 10.1 Directory Structure: {#directory-structure}
 
-![](media/image9.png){width="7.401186570428696in" height="3.5189873140857393in"}
+![](media/image9.jpg)
 
 # 11. Context Providers(Global State)  {#context-providersglobal-state}
 
