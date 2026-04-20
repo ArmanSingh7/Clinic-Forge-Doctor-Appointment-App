@@ -4,6 +4,7 @@ import com.doctorapp.security.JwtAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -16,6 +17,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Configuration
@@ -24,6 +26,9 @@ public class SecurityConfig {
 
     @Autowired
     private JwtAuthenticationFilter jwtAuthenticationFilter;
+
+    @Autowired
+    private Environment environment;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -44,11 +49,19 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        boolean isDevProfile = Arrays.asList(environment.getActiveProfiles()).contains("dev");
+
         http
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth -> auth
+                .authorizeHttpRequests(auth -> {
+                    // H2 Console (dev profile only)
+                    if (isDevProfile) {
+                        auth.requestMatchers("/h2-console/**").permitAll();
+                    }
+
+                    auth
                         // PUBLIC - Login & Registration
                         .requestMatchers("/api/users/login", "/api/users/register/**").permitAll()
                         .requestMatchers("/api/users/forgot-password", "/api/users/reset-password").permitAll()
@@ -125,8 +138,14 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/feedbacks/**").authenticated()
 
                         // Everything else requires authentication
-                        .anyRequest().authenticated())
+                        .anyRequest().authenticated();
+                })
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+
+        // H2 Console uses iframes — allow frame options in dev profile
+        if (isDevProfile) {
+            http.headers(headers -> headers.frameOptions(frame -> frame.disable()));
+        }
 
         return http.build();
     }

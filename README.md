@@ -94,43 +94,78 @@ Clinic Forge follows a **client-server monolithic architecture** with a clear se
 
 - Java 17+
 - Node.js 18+ & npm
-- MySQL 8+
 - Maven
+- MySQL 8+ *(optional — H2 dev profile available)*
 
-### Backend Setup
+### Option A: Quick Start (No MySQL Required)
+
+Uses the built-in H2 in-memory database with pre-loaded demo data:
 
 ```bash
 # 1. Clone the repository
 git clone https://github.com/your-username/clinic-forge.git
-cd clinic-forge/backend
 
-# 2. Configure application.properties
-# Set your MySQL credentials and JWT secret:
-# spring.datasource.url=jdbc:mysql://localhost:3306/doctor_app
-# spring.datasource.username=<your_user>
-# spring.datasource.password=<your_password>
-# jwt.secret=<min_32_byte_secret>
-# spring.mail.username=<your_gmail>
-# spring.mail.password=<your_app_password>
+# 2. Start the backend with dev profile
+cd clinic-forge/DoctorApp
+mvn spring-boot:run -Dspring-boot.run.profiles=dev
+# Backend runs at http://localhost:8080
+# H2 Console at http://localhost:8080/h2-console (JDBC URL: jdbc:h2:mem:doctor_app)
 
-# 3. Build and run
+# 3. Start the frontend (in a new terminal)
+cd clinic-forge/doctor-app-frontend
+npm install
+npm run dev
+# Frontend runs at http://localhost:5173
+```
+
+### Option B: With MySQL
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/your-username/clinic-forge.git
+
+# 2. Ensure MySQL is running and configure credentials (optional — defaults to root with no password)
+# You can set environment variables: DB_URL, DB_USERNAME, DB_PASSWORD, JWT_SECRET
+
+# 3. Start the backend
+cd clinic-forge/DoctorApp
 mvn spring-boot:run
 # Backend runs at http://localhost:8080
 # Swagger UI at http://localhost:8080/swagger-ui.html
-```
 
-### Frontend Setup
-
-```bash
-cd clinic-forge/frontend
-
-# Install dependencies
+# 4. Start the frontend (in a new terminal)
+cd clinic-forge/doctor-app-frontend
 npm install
-
-# Start development server
 npm run dev
-# Frontend runs at http://localhost:3000
+# Frontend runs at http://localhost:5173
 ```
+
+### Demo Credentials
+
+The app auto-seeds demo data on first startup (controlled by `app.seed-data=true` in `application.properties`).
+
+| Role | Username | Password |
+|---------|-----------|----------------|
+| Admin | `admin1` | `Password@123` |
+| Doctor | `doctor1` | `Password@123` |
+| Doctor | `doctor2` | `Password@123` |
+| Doctor | `doctor3` | `Password@123` |
+| Patient | `patient1`| `Password@123` |
+| Patient | `patient2`| `Password@123` |
+| Patient | `patient3`| `Password@123` |
+
+> **Tip:** Set `app.seed-data=false` in `application.properties` to disable demo data seeding.
+
+### Environment Variables (Optional)
+
+| Variable | Default | Description |
+|---|---|---|
+| `DB_URL` | `jdbc:mysql://localhost:3306/doctor_app?...` | Database JDBC URL |
+| `DB_USERNAME` | `root` | Database username |
+| `DB_PASSWORD` | *(empty)* | Database password |
+| `JWT_SECRET` | `change-me-to-a-secure-key-at-least-32-bytes` | JWT signing secret |
+| `MAIL_USERNAME` | *(empty)* | Gmail address for SMTP |
+| `MAIL_PASSWORD` | *(empty)* | Gmail app password for SMTP |
 
 ---
 

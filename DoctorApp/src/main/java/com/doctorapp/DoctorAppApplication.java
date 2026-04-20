@@ -10,5 +10,6 @@ public class DoctorAppApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(DoctorAppApplication.class, args);
+        System.out.println("Running");
     }
 }
