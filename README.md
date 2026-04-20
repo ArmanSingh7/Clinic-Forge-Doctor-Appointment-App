@@ -26,11 +26,11 @@
 
 ## ✨ Features
 
-| **Stakeholder** | **Capabilities** | 
-| --- | --- | --- | --- |
-| 👨‍⚕️ Doctor | Manage profile, set availability date ranges, manage time slots, approve/reject/confirm appointments, prescribe medicines, view patient visit history, send email to patients | 🛡️ Admin | Manage all doctors and patients (CRUD), monitor all appointments, view system-wide statistics via dashboard with charts, filter users by city, view documents |
+| Stakeholder | Capabilities |
+| --- | --- |
 | 🧑‍⚕️ Patient | Register, search doctors by city/specialization/ratings, book appointments with specific time slots, upload medical documents, view prescriptions, provide feedback with ratings, receive real-time notifications |
-
+| 👨‍⚕️ Doctor | Manage profile, set availability date ranges, manage time slots, approve/reject/confirm appointments, prescribe medicines, view patient visit history, send email to patients |
+| 🛡️ Admin | Manage all doctors and patients (CRUD), monitor all appointments, view system-wide statistics via dashboard with charts, filter users by city, view documents |
 ---
 
 ## 🛠 Tech Stack
