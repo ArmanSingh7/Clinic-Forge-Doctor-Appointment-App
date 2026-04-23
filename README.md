@@ -375,6 +375,57 @@ Centralized via `@RestControllerAdvice` (`GlobalExceptionHandler`):
 
 ---
 
+## 🧪 Testing
+
+The backend uses **JUnit 5** with **Mockito** for unit testing. All tests follow the **Arrange-Act-Assert** pattern using `MockMvc` for controller tests and direct service invocation for service-layer tests.
+
+### Running Tests
+
+```bash
+cd DoctorApp
+mvn test
+```
+
+### Test Summary
+
+| Layer | Test Class | Tests | Description |
+|-------|-----------|-------|-------------|
+| **Controller** | `UserControllerTest` | 5 | Login (patient, doctor auto-link) and registration (doctor, patient, admin) |
+| **Controller** | `PatientControllerTest` | 8 | Patient CRUD (register, update, remove, get by ID, get all) and queries (by doctor, by date, visit history) |
+| **Controller** | `DoctorControllerTest` | 10 | Doctor listing, search (city/speciality filters), availability, time slots, and email sending |
+| **Controller** | `AppointmentControllerTest` | 10 | Get all/by-ID, book appointment, status transitions (approve, reject, confirm, cancel), and query by doctor/patient/date |
+| **Controller** | `FeedbackControllerTest` | 6 | Add feedback, duplicate detection (409), get by ID/doctor/appointment, 404 handling |
+| **Controller** | `AdminControllerTest` | 4 | Admin CRUD — add, update, remove, get by ID |
+| **Security** | `JwtUtilTest` | 10 | Token generation, validation (correct, tampered, random, expired), and claim extraction (username, role, userId, profileId, all claims) |
+| **Service** | `UserServiceImplTest` | 12 | Login via username/mobile (patient & doctor), invalid credentials, user CRUD, and registration for all roles with password mismatch validation |
+| **Service** | `AppointmentServiceImplTest` | 16 | Booking (with/without time slots, availability validation, already-booked slot), status transitions (approve, reject, confirm with slot marking, cancel with restriction), and query operations |
+| **Service** | `DoctorServiceImplTest` | 9 | Doctor CRUD, availability management with auto-generation of 30-min time slots (single/multi-day), skip regeneration for existing slots, update with slot regeneration |
+| **Service** | `PatientServiceImplTest` | 8 | Patient CRUD and query operations (by doctor, by date, empty results) |
+| **Service** | `FeedbackServiceImplTest` | 7 | Add feedback with doctor notification, graceful handling when doctor has no user, null patient name, get by probe/doctor/appointment |
+| **Service** | `AdminServiceImplTest` | 4 | Admin CRUD — add, update, remove, view |
+
+**Total: ~109 unit tests across 13 test classes**
+
+### Test Coverage by Module
+
+- **Authentication & Authorization** — Login (username, email, mobile number), JWT token lifecycle, role-based registration
+- **Doctor Management** — CRUD, search with city/speciality filters, availability scheduling, 30-minute time slot auto-generation, email dispatch
+- **Patient Management** — CRUD, query by doctor/date, visit history retrieval
+- **Appointment Workflow** — Booking with availability validation, full status lifecycle (PENDING → APPROVED → CONFIRMED, or REJECTED/CANCELLED), time slot locking
+- **Feedback System** — Submission with duplicate prevention, doctor notifications, query by doctor/appointment
+- **Admin Operations** — Full CRUD operations
+
+### Tools & Frameworks
+
+| Tool | Purpose |
+|------|---------|
+| **JUnit 5** | Test framework with `@Nested` and `@DisplayName` for organized, readable tests |
+| **Mockito** | Mocking dependencies with `@Mock`, `@InjectMocks`, and `ArgumentCaptor` |
+| **MockMvc** | Spring MVC endpoint testing with request builders and result matchers |
+| **AssertJ** | Fluent assertion library for service-layer tests |
+
+---
+
 ## 🔮 Future Works
 
 - [ ]  Video consultation / telemedicine integration
@@ -387,4 +438,3 @@ Centralized via `@RestControllerAdvice` (`GlobalExceptionHandler`):
 - [ ]  Microservices migration for scalability
 
 ---
-
