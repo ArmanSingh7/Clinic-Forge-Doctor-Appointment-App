@@ -2,6 +2,7 @@ package com.doctorapp.config;
 
 import com.doctorapp.security.JwtAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -35,10 +36,18 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+      /** Comma-separated list, e.g. "https://clinicforge.vercel.app,http://localhost:3000". */
+    @Value("${app.cors.allowed-origins:http://localhost:3000,http://localhost:5173}")
+    private String allowedOrigins;
+
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("http://localhost:3000", "http://localhost:5173"));
+        config.setAllowedOrigins(Arrays.stream(allowedOrigins.split(","))
+                .map(String::trim)
+                .map(o -> o.endsWith("/") ? o.substring(0, o.length() - 1) : o)
+                .filter(o -> !o.isEmpty())
+                .toList());
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);
