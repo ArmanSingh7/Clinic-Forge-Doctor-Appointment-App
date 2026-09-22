@@ -1,7 +1,11 @@
 import axios from 'axios';
 
+// In production set VITE_API_URL (e.g. https://clinicforge-api.onrender.com).
+// Locally it stays empty and Vite's dev proxy forwards /api to localhost:8080.
+export const API_ORIGIN = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '');
+
 const api = axios.create({
-  baseURL: '/api',
+  baseURL: `${API_ORIGIN}/api`,
 });
 
 api.interceptors.request.use((config) => {
